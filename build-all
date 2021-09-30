@@ -1,0 +1,89 @@
+#!/bin/bash
+set -e
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+if [[ $EUID -ne 0 ]]; then
+   echo "Execute sudo ./build. The user $USER does not have the sudo privileges necessary to continue." 
+   exit 1
+fi
+echo "*******DGEN Mac OS X Build*******"
+
+arch=$(arch)
+app=/Applications/Dgen.app
+dgen=dgen-sdl-1.3.3
+sdl=sdl-1.2.15
+zlib=zlib-1.2.11
+liba=libarchive-3.5.2
+version=r5
+rm -rf $app
+rm -rf dgen_1.3.3_mac_os_x_"$version"_"$arch"
+cd "$(dirname "$0")"
+cp -r Dgen.app /Applications
+
+rm -rf build
+mkdir build
+
+cp -pr $sdl build
+cd build/$sdl
+if [ "$arch" = "i386" ]; then
+	./configure --disable-static --exec-prefix=$app --prefix=$app --enable-video-opengl --enable-asm --disable-altivec LDFLAGS="-framework OpenGL" --without-x
+else
+	./configure --disable-static --exec-prefix=$app --prefix=$app --enable-video-opengl CFLAGS="-mmacosx-version-min=10.3" --enable-asm --enable-altivec LDFLAGS="-mmacosx-version-min=10.3 -framework OpenGL" --without-x
+fi
+make install
+cd ../../
+rm -rf build/$sdl
+
+cp -pr $zlib build/$zlib
+cd build/$zlib
+./configure --prefix=$app --eprefix=$app
+if [ "$arch" != "i386" ]; then
+	patch Makefile ../../zlib_patch
+fi
+make install
+cd ../../
+rm -rf build/$zlib
+
+cp -pr $liba build/$liba
+cd build/$liba
+if [ "$arch" = "i386" ]; then
+	./configure --exec-prefix=$app --prefix=$app --disable-bsdcat --disable-bsdtar --enable-shared --disable-bsdcpio CFLAGS="-I/Applications/Dgen.app/include" LDFLAGS="-L/Applications/Dgen.app/lib" LIBS="-L/Applications/Dgen.app/lib" --without-bz2lib --enable-static=NO
+else
+	./configure --exec-prefix=$app --prefix=$app --disable-bsdcat --disable-bsdtar --enable-shared --disable-bsdcpio CFLAGS="-mmacosx-version-min=10.3 -I/Applications/Dgen.app/include" LDFLAGS="-mmacosx-version-min=10.3 -L/Applications/Dgen.app/lib" LIBS="-L/Applications/Dgen.app/lib" --without-bz2lib --enable-static=NO
+fi
+make install
+cd ../../
+rm -rf build/$liba
+
+cp -pr $dgen build/$dgen
+cd build/$dgen
+patch sdl/sdl.cpp ../../0001-Allow-more-keys-to-work.patch
+if [ "$arch" = "i386" ]; then
+	./configure --exec-prefix=$app --prefix=$app --with-sdl-prefix=$app --with-sdl-exec-prefix=$app --enable-opengl --with-libarchive CFLAGS="-I/Applications/Dgen.app/include" LDFLAGS="-framework OpenGL -L/Applications/Dgen.app/lib" --disable-asm
+else
+	./configure --exec-prefix=$app --prefix=$app --with-sdl-prefix=$app --with-sdl-exec-prefix=$app --enable-opengl --with-libarchive CFLAGS="-mmacosx-version-min=10.3 -I/Applications/Dgen.app/include" LDFLAGS="-mmacosx-version-min=10.3 -framework OpenGL -L/Applications/Dgen.app/lib"
+fi
+make install
+cd ../../
+rm -rf build/$dgen
+
+rm -rf $app/lib/*.la $app/lib/*.a
+
+install_name_tool -change /Applications/Dgen.app/lib/libSDL-1.2.0.dylib @executable_path/../lib/libSDL-1.2.0.dylib /Applications/DGEN.app/bin/dgen
+install_name_tool -change /Applications/Dgen.app/lib/libSDL-1.2.0.dylib @executable_path/../lib/libSDL-1.2.0.dylib /Applications/DGEN.app/bin/dgen
+#liba
+install_name_tool -change /Applications/Dgen.app/lib/libz.1.dylib @executable_path/libz.1.dylib /Applications/DGEN.app/lib/libarchive.13.dylib
+install_name_tool -change /Applications/Dgen.app/lib/libarchive.13.dylib @executable_path/../lib/libarchive.13.dylib /Applications/Dgen.app/bin/dgen
+
+rm -rf build
+cp xbox360config $app
+cp applet.icns $app/Contents/Resources
+chmod -R 777 $app
+rm -rf build
+rm -rf dgen_1.3.3_mac_os_x_"$version"_"$arch"
+mkdir dgen_1.3.3_mac_os_x_"$version"_"$arch"
+cp -r $app dgen_1.3.3_mac_os_x_"$version"_"$arch"
+cp dgen-original-readme.txt dgen_1.3.3_mac_os_x_"$version"_"$arch" 
+cp -r licenses dgen_1.3.3_mac_os_x_"$version"_"$arch" 
+cp dgen-original-readme.txt dgen_1.3.3_mac_os_x_"$version"_"$arch"
+cp readme.html dgen_1.3.3_mac_os_x_"$version"_"$arch"

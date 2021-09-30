@@ -1,0 +1,38 @@
+From b759d63838c9077dd809a6225748801c1f0a5a51 Mon Sep 17 00:00:00 2001
+From: ichigo-0
+Date: Wed, 9 Dec 2015 23:12:04 -0500
+Subject: [PATCH] Allow more keys to work.
+
+---
+ sdl/sdl.cpp | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/sdl/sdl.cpp b/sdl/sdl.cpp
+index 8a76e76..9891e94 100644
+--- a/sdl/sdl.cpp
++++ b/sdl/sdl.cpp
+@@ -6455,7 +6455,9 @@ next_event:
+ 		ksym = event.key.keysym.sym;
+ 		ksym_uni = event.key.keysym.unicode;
+ 		if ((ksym_uni < 0x20) ||
+-		    ((ksym >= SDLK_KP0) && (ksym <= SDLK_KP_EQUALS)))
++		    ((ksym >= SDLK_KP0) && (ksym <= SDLK_KP_EQUALS)) ||
++		    ((ksym >= SDLK_UP) && (ksym <= SDLK_F15)) ||
++		    ((ksym == SDLK_BACKSPACE) || (ksym == SDLK_DELETE)))
+ 			ksym_uni = 0;
+ 		kpress[(ksym & 0xff)] = ksym_uni;
+ 		if (ksym_uni)
+@@ -6569,7 +6571,9 @@ next_event:
+ 		ksym = event.key.keysym.sym;
+ 		ksym_uni = kpress[(ksym & 0xff)];
+ 		if ((ksym_uni < 0x20) ||
+-		    ((ksym >= SDLK_KP0) && (ksym <= SDLK_KP_EQUALS)))
++		    ((ksym >= SDLK_KP0) && (ksym <= SDLK_KP_EQUALS)) ||
++		    ((ksym >= SDLK_UP) && (ksym <= SDLK_F15)) ||
++		    ((ksym == SDLK_BACKSPACE) || (ksym == SDLK_DELETE)))
+ 			ksym_uni = 0;
+ 		kpress[(ksym & 0xff)] = 0;
+ 		if (ksym_uni)
+-- 
+1.8.1.3
+

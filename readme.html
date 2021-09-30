@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DGEN For Mac OS X</title>
+    </head>
+<body style="background-color:black; color:white;">
+
+<h1>DGEN (Sega Genesis/MegaDrive Emulator) For Mac OS X 10.4.x Tiger (Intel) and Mac OS X 10.3.9 Panther (PowerPC)</h1> 
+<p>Ported by Alex Free</p>
+
+<p><a href=http://dgen.sourceforge.net/>DGEN Official Website</a> | <a href=https://alex-free.github.io/dgen>Port Homepage</a> | <a href=https://github.com/alex-free/dgen-mac>GitHub</a> | <a href=https://macintoshgarden.org/apps/dgen-mac-os-x>MacintoshGarden</a></p>
+
+<p><a href=http://dgen.sourceforge.net/>DGEN</a> is an open source Sega Genesis/MegaDrive emulator that is available for many operating systems. This port of DGEN is for Mac OS X 10.4 and higher (Intel build) and Mac OS X 10.3.9 and higher (PowerPC build).</p>
+
+<p>There was an official port to the Classic Mac OS 9 operating system in the late 90s/early 2000s, which is still available on on the <a href=https://macintoshgarden.org/apps/dgen-sega-megdrive-genesis-emulator>Macintosh Garden</a>. However, this port is not Mac OS X native, which also means it does not run on Mac OS X 10.5 Leopard PowerPC due to the lack of the Classic environment. Mac OS X 10.4 Tiger running on Intel systems can not even run the old port since Rosetta can not be used with the Classic environment to run Mac OS 9 software. Besides the previously stated reasons, the last Mac OS 9 release is stuck at DGEN v1.1.7. The current and latest version of the DGEN emulator is v1.3.3.</p>
+
+<p>This DGEN port also includes <b>Xbox 360 controller support already set up</b> for use with the <a href=https://tattiebogle.net/index.php/ProjectRoot/Xbox360Controller/OsxDriver>Tattieboogle Xbox 360 Controller Driver</a>. Read the <a href="#usage">Usage</a> section for the controller button mappings and info on setup.</p>
+
+<h2>Table Of Contents</h2>
+<ul><li><a href="#downloads">Downloads</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#install_source">Install From Source</a></li>
+<li><a href="#changelog">Changlog</a></li>
+<l><a href="#bunded">Bundled Software</a></li>
+<li><a href="#licenses">License</a></li></ul>
+
+<a name=downloads><h2>Downloads</h2></a>
+<h3>Release 5 - (9/30/2021) - <a href="#changelog">What's New In This Version?</a></h3>
+
+<p><a href=https://github.com/alex-free/dgen-mac/releases/download/r5/dgen_1.3.3_mac_os_x_r5_i386.zip>Mac OS 10.4.x+ (Intel 32 bit)</a></p>
+
+<p><a href=https://github.com/alex-free/dgen-mac/releases/download/r5/dgen_1.3.3_mac_os_x_r5_ppc.zip>Mac OS 10.3.9+ (PowerPC)</a></p>
+
+<p><a href=https://github.com/alex-free/dgen-osx/releases/download/r5/source.zip>Source</a></p>
+
+<p>View <a href=https://github.com/alex-free/dgen-osx/releases/>all releases</a>.</p>
+
+<a name=usage><h2>Usage</h2></a>
+
+<h3>System Requirements</h3>
+
+<p>This port of DGEN does not use assembly optimizations as they are not available on Mac OS X. A high end G4 or better is recommended. Any G5 or Intel Mac will run DGEN great.</p>
+
+<p>Download and unzip the latest release for your PowerPC or Intel Mac. <code>Dgen.app</code> is a portable application, and can be ran from anywhere. Double click <code>Dgen.app</code>, and you will be presented with the following options:</p>
+
+<ul><li><code>About</code> - Displays the version number of DGEN</li> 
+
+<li><code>Configure</code> - This will open the <code>~/.dgen/dgenrc</code> config file in a text edit window, allowing you to make changes to the settings of the DGEN emulator.</li>
+
+<li><code>Configure Xbox 360 Controller(s) Support</code> - This will <b>overwrite</b> any existing <code>~/.dgen/dgenrc</code> config file with the default configuration <b>plus Xbox 360 Controller button mappings for up to 2 players/controllers at one time</b>.</li>
+
+<li><code>Load ROM</code> - This will open a Finder window allowing you to select a Sega Genesis/MegaDrive ROM file, which can be compressed.</li></ul>
+
+<h3>Fullscreen</h3>
+
+<p>The default configuration is to start in windowed mode. To enter fullscreen mode, press the <code>ALT</code> and <code>RETURN</code> keys at the same time.</p>
+
+<p>You can edit the <code>bool_fullscreen = false</code> option to <code>bool_fullscreen = true</code> to go fullscreen by default.</p>
+
+<h3>Xbox 360 Controller(s) Button Mapping</h3>
+
+<p>Through pure trial and error (there is <b>no key mapping info it seems for Mac OS X+SDL 1.x+<a href=https://tattiebogle.net/index.php/ProjectRoot/Xbox360Controller/OsxDriver>Tattieboogle Xbox 360 Controller Driver</a> already available</b>), I have come up with a pretty sane button mapping for Sega Genesis to Xbox 360 Controller configuration. You can try to change this to your liking, but prepared to be infuriated by the trial and error-ness of doing so on your own without my config. Up to 2 controllers will work at the same time with the below button mappings:</p>
+
+<table>
+  <tr>
+    <th>Sega Genesis Button</th>
+    <th>Xbox 360 Controller Button</th>
+  </tr>
+  <tr>
+    <td>DPAD-up</td>
+    <td>DPAD-up</td>
+  </tr>
+  <tr>
+    <td>DPAD-down</td>
+    <td>DPAD-down</td>
+  </tr>
+  <tr>
+    <td>DPAD-left</td>
+    <td>DPAD-left</td>
+  </tr>
+  <tr>
+    <td>DPAD-right</td>
+    <td>DPAD-right</td>
+  </tr>
+  <tr>
+    <td>A</td>
+    <td>B</td>
+  </tr>
+  <tr>
+    <td>B</td>
+    <td>A</td>
+  </tr>
+  <tr>
+    <td>C</td>
+    <td>X</td>
+  </tr>
+  <tr>
+    <td>X</td>
+    <td>L1</td>
+  </tr>
+  <tr>
+    <td>Y</td>
+    <td>Y</td>
+  </tr>
+  <tr>
+    <td>Z</td>
+    <td>R1</td>
+  </tr>
+  <tr>
+    <td>Select</td>
+    <td>Select</td>
+  </tr>
+  <tr>
+    <td>Start</td>
+    <td>Start</td>
+  </tr>
+</table>
+
+<a name=install_source><h2>Install From Source</h2></a>
+
+<h3>Requirements</h3>
+
+<ul><li>Mac OS X 10.4.x PowerPC (targets 10.3.9+) or Mac OS X 10.4.x Intel (targets 10.4.x+)</li>
+<li>Xcode 2.5</li>
+</ul>
+
+<p>Run the <code>build-all</code> script in the source code <a href="#downloads">download</a>. DGEN will be built into a portable <code>Dgen.app</code> in the <code>/Applications</code> directory.</p>
+
+<a name=changelog><h2>Changelog</h2></a>
+
+<h3>Release 5 (9/30/2021)</h3>
+<ul><li>Updated libarchive to version 3.5.2.</li>
+<li><code>Dgen.app</code> is now a portable application that can be ran from anywhere, not just from within the <code>/Applications</code> directory.</li>
+<li>Added Intel support for Mac OS X 10.4.x+ to the <code>build-all</code> script.</li>
+<li>Added the <code>Configure Xbox 360 Controller(s) Support</code> option, to automatically setup button mappings for Xbox 360 controllers using the <a href=https://tattiebogle.net/index.php/ProjectRoot/Xbox360Controller/OsxDriver>Tattieboogle Xbox 360 Controller Driver</a>.</li></ul>
+
+<h2><a name=bundled>Bundled Software</a></h2>
+
+<p>This Release Includes:</p>
+
+<ul><li><a href=http://dgen.sourceforge.net/>DGEN</a> version 1.33(latest)</li>
+<li><a href=http://www.zlib.net/>Zlib</a> version 1.2.11(latest)</li>
+<li><a href=http://www.libsdl.org/download-1.2.php>SDL</a> version 1.2.15(latest 1.2 branch)</a></li>
+<li><a href=http://libarchive.org/>Libarchive</a> version 3.5.2(latest)</li></ul>
+
+<p>This release of Dgen is completely up to date as of this release (9/30/2021).</p>
+
+<a name=licenses><h2>Licenses</h2></a>
+
+<p>DGEN has multiple different licenses, as described in the DGEN license txt file. LibArchive has the New-BSD license, and Zlib is under it's own Zlib license. All of these can be found in their entirety within the <code>licenses</code> directory distributed in each DGEN For Mac OS X release.</p>

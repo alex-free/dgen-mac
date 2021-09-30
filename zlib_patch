@@ -1,0 +1,10 @@
+21c21
+< CFLAGS=-O3 -DHAVE_HIDDEN
+---
+> CFLAGS=-O3 -DHAVE_HIDDEN -mmacosx-version-min=10.3
+27,28c27,28
+< SFLAGS=-O3 -fPIC -DHAVE_HIDDEN
+< LDFLAGS=
+---
+> SFLAGS=-O3 -fPIC -DHAVE_HIDDEN -mmacosx-version-min=10.3
+> LDFLAGS=-mmacosx-version-min=10.3
